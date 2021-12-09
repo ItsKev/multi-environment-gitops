@@ -1,6 +1,0 @@
-resources:
-- ../../base
-namespace: prod
-
-patchesStrategicMerge:
-- deployment.yaml

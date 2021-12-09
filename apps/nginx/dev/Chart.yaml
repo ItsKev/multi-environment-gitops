@@ -1,0 +1,9 @@
+apiVersion: v2
+name: nginx
+description: Installation of nginx
+version: 0.1.0
+
+dependencies:
+- name: nginx
+  version: 9.5.16
+  repository: https://charts.bitnami.com/bitnami

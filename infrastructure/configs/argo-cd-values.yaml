@@ -6,3 +6,24 @@ server:
   service:
     type: NodePort
     nodePortHttp: 30000
+  config:
+    configManagementPlugins: |
+      - name: kustomized-helm
+        init:
+          command: ["/bin/sh", "-c"]
+          args: ["helm dependency build"]
+        generate:
+          command: [sh, -c]
+          args: ["helm template --release-name release-name . > all.yaml && kustomize build"]
+
+configs:
+  credentialTemplates:
+    ssh-creds:
+      url: git@github.com:ItsKev/multi-environment-gitops.git
+      sshPrivateKey: |
+        -----BEGIN OPENSSH PRIVATE KEY-----
+        ...
+        -----END OPENSSH PRIVATE KEY-----
+  repositories:
+    github:
+      url: git@github.com:ItsKev/multi-environment-gitops.git
