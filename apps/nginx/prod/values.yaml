@@ -1,3 +1,5 @@
 nginx:
   commonLabels:
     env: "prod"
+  service:
+    type: ClusterIP
