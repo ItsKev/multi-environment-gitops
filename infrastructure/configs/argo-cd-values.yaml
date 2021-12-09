@@ -1,5 +1,6 @@
-args:
-  appResyncPeriod: 15
+controller:
+  args:
+    appResyncPeriod: 15
 
 server:
   service:
