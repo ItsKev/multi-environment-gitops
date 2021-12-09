@@ -1,29 +1,28 @@
 controller:
   args:
-    appResyncPeriod: 15
+    appResyncPeriod: 30
 
 server:
   service:
     type: NodePort
     nodePortHttp: 30000
-  config:
-    configManagementPlugins: |
-      - name: kustomized-helm
-        init:
-          command: ["/bin/sh", "-c"]
-          args: ["helm dependency build"]
-        generate:
-          command: [sh, -c]
-          args: ["helm template --release-name release-name . > all.yaml && kustomize build"]
+  additionalApplications:
+    - name: applications
+      namespace: argo
+      project: default
+      destination:
+        server: https://kubernetes.default.svc
+      project: default
+      source:
+        path: app-of-apps
+        repoURL: https://github.com/ItsKev/multi-environment-gitops
+        targetRevision: HEAD
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
 
 configs:
-  credentialTemplates:
-    ssh-creds:
-      url: git@github.com:ItsKev/multi-environment-gitops.git
-      sshPrivateKey: |
-        -----BEGIN OPENSSH PRIVATE KEY-----
-        ...
-        -----END OPENSSH PRIVATE KEY-----
   repositories:
     github:
-      url: git@github.com:ItsKev/multi-environment-gitops.git
+      url: https://github.com/ItsKev/multi-environment-gitops
