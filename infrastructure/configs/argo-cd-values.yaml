@@ -1,0 +1,7 @@
+args:
+  appResyncPeriod: 15
+
+server:
+  service:
+    type: NodePort
+    nodePortHttp: 30000
